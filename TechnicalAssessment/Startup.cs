@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TechnicalAssessment.Models;
 using TechnicalAssessment.Services;
 using TechnicalAssessment.Data;
+using TechnicalAssessment.Data.Models;
 
 namespace TechnicalAssessment
 {

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TechnicalAssessment.Services;
 using TechnicalAssessment.Data;
 using TechnicalAssessment.Data.Models;
+using TechnicalAssessment.Service;
 
 namespace TechnicalAssessment
 {
@@ -31,6 +32,8 @@ namespace TechnicalAssessment
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IPersonalInformation, PersonalInformationService>();
+            services.AddScoped<IBranchInformation, BranchInformationService>();
 
             services.AddMvc();
         }

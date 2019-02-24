@@ -16,9 +16,10 @@ namespace TechnicalAssessment.Service
             _context = context;
         }
 
-        public Task Create(PersonalInformation personalInformation)
+        public async Task Create(PersonalInformation personalInformation)
         {
-            throw new NotImplementedException();
+            _context.Add(personalInformation);
+            await _context.SaveChangesAsync();
         }
 
         public Task Delete(int personalInformationId)
@@ -37,9 +38,9 @@ namespace TechnicalAssessment.Service
             throw new NotImplementedException();
         }
 
-        public PersonalInformation GetById(int id)
+        public PersonalInformation GetById(int personalInformationId)
         {
-            var personalInformation = _context.PeoplesInformation.Where(p => p.Id == id)
+            var personalInformation = _context.PeoplesInformation.Where(p => p.Id == personalInformationId)
                 .Include(p => p.Branch)
                 .Include(p => p.User)
                 .FirstOrDefault();

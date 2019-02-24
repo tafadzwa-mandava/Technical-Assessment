@@ -2,12 +2,16 @@
 
 <h1>Branch Information</h1>
 
+<a asp-controller="PersonalInformation" asp-action="Index" asp-route-id="@Model.Id">
+    Back to Previous Page
+</a>
+
 <table class="table table-hover" id="branchInformationIndexTable">
     <tbody>
 
         <tr>
             <td>
-               @Model.BranchName
+                @Model.BranchName
             </td>
 
             <td>

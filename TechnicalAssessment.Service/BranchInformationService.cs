@@ -42,7 +42,10 @@ namespace TechnicalAssessment.Service
 
         public BranchInformation GetById(int branchInformationId)
         {
-            throw new NotImplementedException();
+             var branchInformation = _context.BranchesInformation.Where(b => b.Id == branchInformationId)
+            .FirstOrDefault();
+
+            return branchInformation;
         }
 
         public Task UpdateBranchInformation(int branchlInformationId, string newBranchName, string newBranchCode, string newCity, string newProvince)

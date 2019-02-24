@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TechnicalAssessment.Data;
+using TechnicalAssessment.Data.Models;
 using TechnicalAssessment.Models.BranchInformationViewModels;
 using TechnicalAssessment.Models.PersonalInformationViewModels;
 
@@ -11,16 +13,18 @@ namespace TechnicalAssessment.Controllers
     {
         private readonly IPersonalInformation _personalInformationService;
         private readonly IBranchInformation _branchInformationService;
-        public PersonalInformationController(IPersonalInformation personalInformationService, IBranchInformation branchInformationService)
+
+        private static UserManager<ApplicationUser> _userManager;
+        public PersonalInformationController(IPersonalInformation personalInformationService, IBranchInformation branchInformationService, UserManager<ApplicationUser> userManager)
         {
             _personalInformationService = personalInformationService;
             _branchInformationService = branchInformationService;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
             //IEnumerable<PersonalInformationViewModel> peoplesInformation = _personalInformationService.GetAll() Further simplified using var
-
             var peoplesInformation = _personalInformationService.GetAll()
                 .Select(personalInformation => new PersonalInformationViewModel {
                     Id = personalInformation.Id,
@@ -66,5 +70,9 @@ namespace TechnicalAssessment.Controllers
 
             return View(model);
         }
+
+
+
+
     }
 }

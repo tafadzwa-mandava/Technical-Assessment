@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechnicalAssessment.Data;
@@ -28,6 +29,15 @@ namespace TechnicalAssessment.Service
         public IEnumerable<BranchInformation> GetAll()
         {
             return _context.BranchesInformation;
+        }
+
+        public BranchInformation GetBranchByPersonalInformation(int branchInformationId)
+        {
+            var branch = _context.PeoplesInformation.Where(p => p.Id == branchInformationId)
+                .FirstOrDefault()
+                .Branch;
+
+            return branch;
         }
 
         public BranchInformation GetById(int branchInformationId)

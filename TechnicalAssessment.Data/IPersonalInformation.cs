@@ -9,6 +9,7 @@ namespace TechnicalAssessment.Data
     {
         PersonalInformation GetById(int personalInformationId);
         IEnumerable<PersonalInformation> GetAll();
+        IEnumerable<PersonalInformation> GetFilteredPersonalInformation(string searchQuery);
         IEnumerable<ApplicationUser> GetAllAdminUsers();
 
         Task Create(PersonalInformation personalInformation);

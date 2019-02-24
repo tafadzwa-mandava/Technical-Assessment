@@ -12,5 +12,6 @@ namespace TechnicalAssessment.Models.BranchInformationViewModels
         public string BranchCode { get; set; }
         public string City { get; set; }
         public string Province { get; set; }
+
     }
 }

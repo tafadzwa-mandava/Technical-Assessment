@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TechnicalAssessment.Data;
-using TechnicalAssessment.Data.Models;
+using TechnicalAssessment.Models.BranchInformationViewModels;
 using TechnicalAssessment.Models.PersonalInformationViewModels;
 
 namespace TechnicalAssessment.Controllers
@@ -12,9 +10,11 @@ namespace TechnicalAssessment.Controllers
     public class PersonalInformationController : Controller
     {
         private readonly IPersonalInformation _personalInformationService;
-        public PersonalInformationController(IPersonalInformation personalInformationService)
+        private readonly IBranchInformation _branchInformationService;
+        public PersonalInformationController(IPersonalInformation personalInformationService, IBranchInformation branchInformationService)
         {
             _personalInformationService = personalInformationService;
+            _branchInformationService = branchInformationService;
         }
 
         public IActionResult Index()
@@ -45,12 +45,26 @@ namespace TechnicalAssessment.Controllers
             //The MVC framework is going to be looking for a view called Index in a folder called PersonalInformation
         }
 
+        private int CalculateYears(DateTime joinDate)
+        {
+            throw new NotImplementedException();
+        }
 
         public IActionResult Branch(int id)
         {
             var personalInformation = _personalInformationService.GetById(id);
+            var branch = _branchInformationService.GetBranchByPersonalInformation(id);
 
-            return View();
+            var model = new BranchInformationViewModel
+            {
+                Id = branch.Id,
+                BranchName = branch.BranchName,
+                BranchCode = branch.BranchCode,
+                City = branch.City,
+                Province = branch.Province
+            };
+
+            return View(model);
         }
     }
 }

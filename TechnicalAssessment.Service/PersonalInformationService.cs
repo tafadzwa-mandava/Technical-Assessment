@@ -47,6 +47,11 @@ namespace TechnicalAssessment.Service
             return personalInformation;
         }
 
+        public IEnumerable<PersonalInformation> GetFilteredPersonalInformation(string searchQuery)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task UpdatePersonalInformation(int personalInformationId, string newLastName, string newEmailAddress, string newContactNumber, string AlternativeContactNumber, string Address, string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate, BranchInformation newBranchInformation)
         {
             throw new NotImplementedException();

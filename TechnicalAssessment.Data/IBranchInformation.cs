@@ -11,6 +11,8 @@ namespace TechnicalAssessment.Data
         BranchInformation GetById(int branchInformationId);
         IEnumerable<BranchInformation> GetAll();
 
+        BranchInformation GetBranchByPersonalInformation(int branchInformationId);
+
         Task Create(BranchInformation branchInformation);
         Task Delete(int branchInformationId);
 

@@ -28,16 +28,16 @@ namespace TechnicalAssessment.Controllers
         
         private HomeIndexModel BuildHomeIndexModel()
         {
-            //var latestPeoplesInformation = _personalInformationService.GetLatestPersonalInformation(10);
-            var peoplesInformation = _personalInformationService.GetAll()
-                .Select(personalInformation => new PersonalInformationViewModel
+            var latestPeoplesInformation = _personalInformationService.GetLatestPersonalInformation(5);
+            var peoplesInformation = latestPeoplesInformation.Select(personalInformation => new PersonalInformationViewModel
                 {
                     Id = personalInformation.Id,
                     FirstName = personalInformation.FirstName,
                     LastName = personalInformation.LastName,
                     ProfileImageUrl = personalInformation.ProfileImageUrl,
                     JoiningDate = personalInformation.JoiningDate,
-                    Branch = personalInformation.Branch
+                    Branch = personalInformation.Branch,
+                    User = personalInformation.User
                 });
 
             return new HomeIndexModel

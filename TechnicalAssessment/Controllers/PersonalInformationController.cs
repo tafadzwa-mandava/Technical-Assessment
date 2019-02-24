@@ -32,7 +32,8 @@ namespace TechnicalAssessment.Controllers
                     LastName = personalInformation.LastName,
                     ProfileImageUrl = personalInformation.ProfileImageUrl,
                     JoiningDate = personalInformation.JoiningDate,
-                    Branch = personalInformation.Branch
+                    Branch = personalInformation.Branch,
+                    User = personalInformation.User
                 });
 
             // PersonalInformationListModel.cs wraps the collection of PersonalInformationViewModel

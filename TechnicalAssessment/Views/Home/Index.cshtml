@@ -21,9 +21,14 @@
                 {
                     <tr>
                         <td>
-                            <div class="organisationLogo" style="background-image:url(@personalInformation.ProfileImageUrl); background-size=100%"></div>  
+                            <div class="organisationLogo" style="background-image:url(@personalInformation.ProfileImageUrl); background-size=100%"></div>
                             <div class="personalInformationFistName">
-                                @personalInformation.FirstName
+                                <div class="postSubTitle">
+                                   Posted by @personalInformation.User.UserName
+                                </div>
+                                <div class="personalInformationFistName">
+                                    @personalInformation.FirstName
+                                </div>
                             </div>
                         </td>
                     </tr>

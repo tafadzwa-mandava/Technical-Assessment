@@ -30,7 +30,8 @@ namespace TechnicalAssessment.Service
         public IEnumerable<PersonalInformation> GetAll()
         {
             return _context.PeoplesInformation
-                .Include(personalInformation => personalInformation.Branch);
+                .Include(personalInformation => personalInformation.Branch)
+                .Include(personalInformation => personalInformation.User);
         }
 
         public IEnumerable<ApplicationUser> GetAllAdminUsers()
@@ -51,6 +52,13 @@ namespace TechnicalAssessment.Service
         public IEnumerable<PersonalInformation> GetFilteredPersonalInformation(string searchQuery)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<PersonalInformation> GetLatestPersonalInformation(int count)
+        {
+            var personalInformation = this.GetAll();
+            var latestPersonalInformation = personalInformation.OrderByDescending(p => p.JoiningDate).Take(count);
+            return latestPersonalInformation;
         }
 
         public Task UpdatePersonalInformation(int personalInformationId, string newLastName, string newEmailAddress, string newContactNumber, string AlternativeContactNumber, string Address, string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate, BranchInformation newBranchInformation)

@@ -72,8 +72,5 @@ namespace TechnicalAssessment.Controllers
             return View(model);
         }
 
-
-
-
     }
 }

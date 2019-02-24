@@ -16,14 +16,17 @@ namespace TechnicalAssessment.Service
             _context = context;
         }
 
-        public Task Create(BranchInformation branchInformation)
+        public async Task Create(BranchInformation branchInformation)
         {
-            throw new NotImplementedException();
+            _context.Add(branchInformation);
+            await _context.SaveChangesAsync();
         }
 
-        public Task Delete(int branchInformationId)
+        public async Task Delete(int branchInformationId)
         {
-            throw new NotImplementedException();
+            BranchInformation branchInformation = this.GetById(branchInformationId);
+            _context.Remove(branchInformation);
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<BranchInformation> GetAll()
@@ -48,29 +51,47 @@ namespace TechnicalAssessment.Service
             return branchInformation;
         }
 
-        public Task UpdateBranchInformation(int branchlInformationId, string newBranchName, string newBranchCode, string newCity, string newProvince)
+        public async Task UpdateBranchInformation(int branchlInformationId, string newBranchName, string newBranchCode, string newCity, string newProvince)
         {
-            throw new NotImplementedException();
+            BranchInformation branchInformation = this.GetById(branchlInformationId);
+            branchInformation.BranchName = newBranchName;
+            branchInformation.BranchCode = newBranchCode;
+            branchInformation.City = newCity;
+            branchInformation.Province = newProvince;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateBranchInformationBranchCode(int branchInformationId, string newBranchCode)
+        public async Task UpdateBranchInformationBranchName(int branchlInformationId, string newBranchName)
         {
-            throw new NotImplementedException();
+            BranchInformation branchInformation = this.GetById(branchlInformationId);
+            branchInformation.BranchName = newBranchName;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateBranchInformationBranchName(int branchlInformationId, string newBranchName)
+        public async Task UpdateBranchInformationBranchCode(int branchInformationId, string newBranchCode)
         {
-            throw new NotImplementedException();
+            BranchInformation branchInformation = this.GetById(branchInformationId);
+            branchInformation.BranchCode = newBranchCode;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateBranchInformationCity(int branchInformationId, string newCity)
+        public async Task UpdateBranchInformationCity(int branchInformationId, string newCity)
         {
-            throw new NotImplementedException();
+            BranchInformation branchInformation = this.GetById(branchInformationId);
+            branchInformation.City = newCity;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateBranchInformationProvince(int branchInformationId, string newProvince)
+        public async Task UpdateBranchInformationProvince(int branchInformationId, string newProvince)
         {
-            throw new NotImplementedException();
+            BranchInformation branchInformation = this.GetById(branchInformationId);
+            branchInformation.Province = newProvince;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

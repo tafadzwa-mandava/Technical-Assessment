@@ -22,9 +22,11 @@ namespace TechnicalAssessment.Service
             await _context.SaveChangesAsync();
         }
 
-        public Task Delete(int personalInformationId)
+        public async Task Delete(int personalInformationId)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            _context.Remove(personalInformation);
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<PersonalInformation> GetAll()
@@ -61,54 +63,102 @@ namespace TechnicalAssessment.Service
             return latestPersonalInformation;
         }
 
-        public Task UpdatePersonalInformation(int personalInformationId, string newLastName, string newEmailAddress, string newContactNumber, string AlternativeContactNumber, string Address, string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate, BranchInformation newBranchInformation)
+        public async Task UpdatePersonalInformation(int personalInformationId, string newLastName, string newEmailAddress, string newContactNumber, string newAlternativeContactNumber, string newAddress, string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate, BranchInformation newBranchInformation, ApplicationUser newUser)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.LastName = newLastName;
+            personalInformation.EmailAddress = newEmailAddress;
+            personalInformation.ContactNumber = newContactNumber;
+            personalInformation.AlternativeContactNumber = newAlternativeContactNumber;
+            personalInformation.Address = newAddress;
+            personalInformation.MethodOfContact = newMethodOfContact;
+            personalInformation.ProfileImageUrl = newProfileImageUrl;
+            personalInformation.JoiningDate = newJoiningDate;
+            personalInformation.Branch = newBranchInformation;
+            personalInformation.User = newUser;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationAddress(int personalInformationId, string newAddress)
+        public async Task UpdatePersonalInformationAddress(int personalInformationId, string newAddress)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.Address = newAddress;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationAlternativeContactNumber(int personalInformationId, string newAlternativeContactNumber)
+        public async Task UpdatePersonalInformationAlternativeContactNumber(int personalInformationId, string newAlternativeContactNumber)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.AlternativeContactNumber = newAlternativeContactNumber;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationBranchInformation(int personalInformationId, BranchInformation newBranchInformation)
+        public async Task UpdatePersonalInformationBranchInformation(int personalInformationId, BranchInformation newBranchInformation)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.Branch = newBranchInformation;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationContactNumber(int personalInformationId, string newContactNumber)
+        public async Task UpdatePersonalInformationContactNumber(int personalInformationId, string newContactNumber)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.ContactNumber = newContactNumber;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationEmailAddress(int personalInformationId, string newEmailAddress)
+        public async Task UpdatePersonalInformationEmailAddress(int personalInformationId, string newEmailAddress)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.EmailAddress = newEmailAddress;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationFirstName(int personalInformationId, string newFirstName)
+        public async Task UpdatePersonalInformationFirstName(int personalInformationId, string newFirstName)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.FirstName = newFirstName;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationJoiningDate(int personalInformationId, DateTime newJoiningDate)
+        public async Task UpdatePersonalInformationJoiningDate(int personalInformationId, DateTime newJoiningDate)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.JoiningDate = newJoiningDate;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationLastName(int personalInformationId, string newLastName)
+        public async Task UpdatePersonalInformationLastName(int personalInformationId, string newLastName)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.LastName = newLastName;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdatePersonalInformationProfileImageUrl(int personalInformationId, string newProfileImageUrl)
+        public async Task UpdatePersonalInformationProfileImageUrl(int personalInformationId, string newProfileImageUrl)
         {
-            throw new NotImplementedException();
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.ProfileImageUrl = newProfileImageUrl;
+
+            await _context.SaveChangesAsync();
         }
+
+        public async Task UpdatePersonalInformationUser(int personalInformationId, ApplicationUser newUser)
+        {
+            PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.User = newUser;
+
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

@@ -24,7 +24,9 @@
                 </td>
 
                 <td>
-                    @personalInformation.Branch.BranchName
+                    <a asp-controller="PersonalInformation" asp-action="Branch" asp-route-id="@personalInformation.Id">
+                        @personalInformation.Branch.BranchName
+                    </a>
                 </td>
 
                 <td>

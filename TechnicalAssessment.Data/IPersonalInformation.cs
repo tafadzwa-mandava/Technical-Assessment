@@ -7,7 +7,7 @@ namespace TechnicalAssessment.Data
 {
     public interface IPersonalInformation
     {
-        PersonalInformation GetById();
+        PersonalInformation GetById(int personalInformationId);
         IEnumerable<PersonalInformation> GetAll();
         IEnumerable<ApplicationUser> GetAllAdminUsers();
 

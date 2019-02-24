@@ -30,7 +30,7 @@ namespace TechnicalAssessment.Service
             return _context.BranchesInformation;
         }
 
-        public BranchInformation GetById()
+        public BranchInformation GetById(int branchInformationId)
         {
             throw new NotImplementedException();
         }

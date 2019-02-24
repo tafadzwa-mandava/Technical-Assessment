@@ -8,7 +8,7 @@ namespace TechnicalAssessment.Data
 {
     public interface IBranchInformation
     {
-        BranchInformation GetById();
+        BranchInformation GetById(int branchInformationId);
         IEnumerable<BranchInformation> GetAll();
 
         Task Create(BranchInformation branchInformation);

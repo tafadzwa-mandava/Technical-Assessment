@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnicalAssessment", "Tech
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnicalAssessment.Data", "TechnicalAssessment.Data\TechnicalAssessment.Data.csproj", "{1BB733A0-E0CD-43C2-A6CD-2C77537D2200}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalAssessment.Service", "TechnicalAssessment.Service\TechnicalAssessment.Service.csproj", "{DB30E1B3-4592-4E54-AAC9-0723AC4C33C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnicalAssessment.Service", "TechnicalAssessment.Service\TechnicalAssessment.Service.csproj", "{DB30E1B3-4592-4E54-AAC9-0723AC4C33C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

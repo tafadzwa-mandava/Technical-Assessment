@@ -44,5 +44,13 @@ namespace TechnicalAssessment.Controllers
 
             //The MVC framework is going to be looking for a view called Index in a folder called PersonalInformation
         }
+
+
+        public IActionResult Branch(int id)
+        {
+            var personalInformation = _personalInformationService.GetById(id);
+
+            return View();
+        }
     }
 }

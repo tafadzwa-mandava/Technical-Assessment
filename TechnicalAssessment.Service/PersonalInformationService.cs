@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TechnicalAssessment.Data;
 using TechnicalAssessment.Data.Models;
@@ -36,9 +37,14 @@ namespace TechnicalAssessment.Service
             throw new NotImplementedException();
         }
 
-        public PersonalInformation GetById()
+        public PersonalInformation GetById(int id)
         {
-            throw new NotImplementedException();
+            var personalInformation = _context.PeoplesInformation.Where(p => p.Id == id)
+                .Include(p => p.Branch)
+                .Include(p => p.User)
+                .FirstOrDefault();
+
+            return personalInformation;
         }
 
         public Task UpdatePersonalInformation(int personalInformationId, string newLastName, string newEmailAddress, string newContactNumber, string AlternativeContactNumber, string Address, string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate, BranchInformation newBranchInformation)

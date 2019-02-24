@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TechnicalAssessment</title>
+    <title>Technical Assessment</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -21,14 +21,14 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand navLogo" asp-controller="Home" asp-action="Index"></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-controller="PersonalInformation" asp-action="Index">Personal Information</a></li>
+                    <li><a asp-controller="PersonalInformation" asp-action="Index">Technical Assessment</a></li>
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li class="dropdown">
@@ -65,7 +65,7 @@
                         }
                     </form>
                 }
-                @*await Html.PartialAsync("_LoginPartial")*@
+
             </div>
         </div>
     </nav>
@@ -97,6 +97,8 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     @RenderSection("Scripts", required: false)
 </body>

@@ -2,9 +2,13 @@
 
 <h1>Branch Information</h1>
 
-<a asp-controller="PersonalInformation" asp-action="Index" asp-route-id="@Model.Id">
-    Back to Previous Page
-</a>
+<span id="headingBtn">
+    <a asp-controller="PersonalInformation"
+       asp-action="Index"
+       asp-route-id="@Model.Id">
+        Back to Previous Page
+    </a>
+</span>
 
 <table class="table table-hover" id="branchInformationIndexTable">
     <tbody>

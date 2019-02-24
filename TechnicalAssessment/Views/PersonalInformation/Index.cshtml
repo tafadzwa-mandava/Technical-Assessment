@@ -14,34 +14,34 @@
     <tbody>
         @foreach (var personalInformation in Model.PersonalInformationList)
         {
-            <tr>
-                <td>
-                    @personalInformation.FirstName
-                </td>
+        <tr>
+            <td>
+                <div class="profileImageLogo" style="background-image:url(@personalInformation.ProfileImageUrl); "></div>
+            </td>
 
-                <td>
-                    @personalInformation.LastName
-                </td>
+            <td>
+                @personalInformation.FirstName
+            </td>
 
-                <td>
-                    @personalInformation.ProfileImageUrl
-                </td>
+            <td>
+                @personalInformation.LastName
+            </td>
 
-                <td>
-                    @personalInformation.JoiningDate
-                </td>
+            <td>
+                @personalInformation.JoiningDate
+            </td>
 
-                <td>
-                    <a asp-controller="PersonalInformation" asp-action="Branch" asp-route-id="@personalInformation.Id">
-                        @personalInformation.Branch.BranchName
-                    </a>
-                </td>
+            <td>
+                <a asp-controller="PersonalInformation" asp-action="Branch" asp-route-id="@personalInformation.Id">
+                    @personalInformation.Branch.BranchName
+                </a>
+            </td>
 
-                <td>
-                    @personalInformation.Branch.Province
-                </td>
+            <td>
+                @personalInformation.Branch.Province
+            </td>
 
-            </tr>
+        </tr>
         }
     </tbody>
 </table>

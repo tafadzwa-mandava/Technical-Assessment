@@ -4,7 +4,7 @@
     <div class="row frontPageSplash">
         <div class="col-md-6 frontPageLearn">
             <div class="frontPageHeading">Learn, Collaborate, Share Knowledge</div>
-            <p class="frontPageHeading">This is the world's fastest growing organisation</p>
+            <p class="frontPageHeading">Latest Personal Information </p>
             <div>
                 <form asp-controller="Search" asp-action="Search" method="post">
                     <input asp-for="SearchQuery" type="text" class="homeSearch" placeholder="Search..."/>
@@ -14,7 +14,7 @@
         <div class="col-md-6"></div>
     </div>
     <div class="row frontPageContent">
-        <h3 id="latestPeoplesInformation">Latest People's Information</h3>
+
         <table class="table table-hover" id="latestPeoplesInformationTable">
 
 
@@ -23,7 +23,7 @@
                 {
                 <tr>
                     <td>
-                        <div class="organisationLogo" style="background-image:url(@personalInformation.ProfileImageUrl); background-size=100%"></div>
+                        <div class="profileImageLogo" style="background-image:url(@personalInformation.ProfileImageUrl); "></div>
                     </td>
 
                     <td>
@@ -39,9 +39,7 @@
                     </td>
 
                     <td>
-                        <a asp-controller="PersonalInformation" asp-action="Branch" asp-route-id="@personalInformation.Id">
-                            @personalInformation.Branch.BranchName
-                        </a>
+                         @personalInformation.Branch.BranchName
                     </td>
 
                     <td>

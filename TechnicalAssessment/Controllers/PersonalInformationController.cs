@@ -155,7 +155,7 @@ namespace TechnicalAssessment.Controllers
         public IActionResult Post([FromBody] PersonalInformation personalInformation)
         {
             _personalInformationService.Add(personalInformation);
-            return CreatedAtRoute("Get", new { Id = personalInformation.Id }, personalInformation);
+            return CreatedAtRoute("PersonalInformation/Get", new { id = personalInformation.Id }, personalInformation);
         }
 
 

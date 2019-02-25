@@ -13,13 +13,13 @@ namespace TechnicalAssessment.Data
         IEnumerable<PersonalInformation> GetLatestPersonalInformation(int count);
         IEnumerable<ApplicationUser> GetAllAdminUsers();
 
-        Task Create(PersonalInformation personalInformation);
+        Task Add(PersonalInformation personalInformation);
         Task Delete(int personalInformationId);
 
-        Task UpdatePersonalInformation(int personalInformationId, string newLastName, string newEmailAddress,
+        Task UpdatePersonalInformation(int personalInformationId, string FirstName, string newLastName, string newEmailAddress,
                        string newContactNumber, string AlternativeContactNumber, string Address,
                        string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate,
-                       BranchInformation newBranchInformation, ApplicationUser newUser);
+                       BranchInformation newBranchInformation);
         Task UpdatePersonalInformationFirstName (int personalInformationId, string newFirstName);
         Task UpdatePersonalInformationLastName(int personalInformationId, string newLastName);
         Task UpdatePersonalInformationEmailAddress(int personalInformationId, string newEmailAddress);

@@ -16,7 +16,7 @@ namespace TechnicalAssessment.Service
             _context = context;
         }
 
-        public async Task Create(PersonalInformation personalInformation)
+        public async Task Add(PersonalInformation personalInformation)
         {
             _context.Add(personalInformation);
             await _context.SaveChangesAsync();
@@ -63,9 +63,10 @@ namespace TechnicalAssessment.Service
             return latestPersonalInformation;
         }
 
-        public async Task UpdatePersonalInformation(int personalInformationId, string newLastName, string newEmailAddress, string newContactNumber, string newAlternativeContactNumber, string newAddress, string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate, BranchInformation newBranchInformation, ApplicationUser newUser)
+        public async Task UpdatePersonalInformation(int personalInformationId, string newFirstName, string newLastName, string newEmailAddress, string newContactNumber, string newAlternativeContactNumber, string newAddress, string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate, BranchInformation newBranchInformation)
         {
             PersonalInformation personalInformation = this.GetById(personalInformationId);
+            personalInformation.FirstName = newFirstName;
             personalInformation.LastName = newLastName;
             personalInformation.EmailAddress = newEmailAddress;
             personalInformation.ContactNumber = newContactNumber;
@@ -75,7 +76,6 @@ namespace TechnicalAssessment.Service
             personalInformation.ProfileImageUrl = newProfileImageUrl;
             personalInformation.JoiningDate = newJoiningDate;
             personalInformation.Branch = newBranchInformation;
-            personalInformation.User = newUser;
 
             await _context.SaveChangesAsync();
         }

@@ -16,5 +16,7 @@ namespace TechnicalAssessment.Models.PersonalInformationViewModels
 
         public virtual BranchInformation Branch { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        public bool IsAuthorAdmin { get; set; }
     }
 }

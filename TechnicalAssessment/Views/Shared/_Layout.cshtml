@@ -19,6 +19,8 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -52,7 +54,7 @@
                 {
                     <ul class="nav navbar-nav navbar-right">
                         <li><a asp-controller="Account" asp-action="Login">Sign In</a></li>
-                        <li class="active"><a asp-controller="Register" asp-action="">Register</a></li>
+                        <li class="active"><a asp-controller="Account" asp-action="Register">Register</a></li>
                     </ul>
                 }
                 @if (SignInManager.IsSignedIn(User))
@@ -62,7 +64,6 @@
                             <li>Hello, @UserManager.GetUserName(User)</li>
                             <li><a asp-controller="Account" asp-action="Logout">Sign Out</a></li>
                         </ul>
-                        }
                     </form>
                 }
 
@@ -97,8 +98,6 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     @RenderSection("Scripts", required: false)
 </body>

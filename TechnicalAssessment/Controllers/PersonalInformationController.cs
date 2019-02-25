@@ -126,7 +126,7 @@ namespace TechnicalAssessment.Controllers
 
         //TESTING the APIs below in POSTMAN 
 
-        // GET: api/PersonalInformation/Get
+        // GET: /PersonalInformation/Get
         [HttpGet]
         public IActionResult Get()
         {
@@ -134,7 +134,7 @@ namespace TechnicalAssessment.Controllers
             return Ok(peoplesInformation);
         }
 
-        // GET: api/PersonalInformation/Get/1
+        // GET: /PersonalInformation/Get/1
         [HttpGet("/PersonalInformation/Get/{id}", Name = "Get")]
         public IActionResult Get(int id)
         {

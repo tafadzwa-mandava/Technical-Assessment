@@ -5,7 +5,7 @@
 <span id="headingBtn">
     <a asp-controller="PersonalInformation" 
            asp-action="Create" 
-           asp-route-id="" class="btn btn-back">
+           asp-route-id="" class="btn btn-newPost">
            Create Client's Personal Information
     </a>
 </span>
@@ -39,6 +39,12 @@
 
             <td>
                 @personalInformation.Branch.Province
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@personalInformation.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@personalInformation.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@personalInformation.Id">Delete</a>
             </td>
 
         </tr>

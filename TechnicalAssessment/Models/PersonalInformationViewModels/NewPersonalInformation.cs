@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TechnicalAssessment.Data.Models;
 
 namespace TechnicalAssessment.Models.PersonalInformationViewModels
 {
-    public class NewPesornalInformation
+    public class NewPersonalInformation
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -18,11 +19,7 @@ namespace TechnicalAssessment.Models.PersonalInformationViewModels
         public string ProfileImageUrl { get; set; }
         public DateTime JoiningDate { get; set; }
 
-        public int BranchId { get; set; }
-        public string BranchName { get; set; }
-        public string BranchCode { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
+        public BranchInformation Branch { get; set; }
 
     }
 }

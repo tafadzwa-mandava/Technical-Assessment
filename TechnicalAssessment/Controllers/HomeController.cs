@@ -37,7 +37,7 @@ namespace TechnicalAssessment.Controllers
                     ProfileImageUrl = personalInformation.ProfileImageUrl,
                     JoiningDate = personalInformation.JoiningDate,
                     Branch = personalInformation.Branch,
-                    User = personalInformation.User
+                    AppUser = personalInformation.AppUser
                 });
 
             return new HomeIndexModel

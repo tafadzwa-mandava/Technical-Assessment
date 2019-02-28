@@ -1,0 +1,37 @@
+﻿@model TechnicalAssessment.Models.BranchInformationViewModels.BranchInformationIndexModel
+
+<h1>Branch Information</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table table-hover" id="branchInformationIndexTable">
+    <tbody>
+        @foreach (var branchInformation in Model.BranchInformationList)
+        {
+            <tr>
+                <td>
+                    @branchInformation.BranchName
+                </td>
+
+                <td>
+                    @branchInformation.BranchCode
+                </td>
+
+                <td>
+                    @branchInformation.City
+                </td>
+
+                <td>
+                    @branchInformation.Province
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@branchInformation.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@branchInformation.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@branchInformation.Id">Delete</a>
+                </td>
+            </tr>
+         }
+    </tbody>
+</table>

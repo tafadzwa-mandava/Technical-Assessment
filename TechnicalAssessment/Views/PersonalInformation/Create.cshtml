@@ -1,0 +1,92 @@
+﻿@model TechnicalAssessment.Models.PersonalInformationViewModels.NewPersonalInformation
+
+<h1>New Personal Information</h1>
+
+<form asp-action="Create" method="post" id="addPersonalInformationForm">
+    <div class="form-group">
+        <label asp-for="FirstName"> First Name</label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">Last Name</label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EmailAddress"> Email Address</label>
+        <input asp-for="EmailAddress" type="email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ContactNumber">Contact Number</label>
+        <input asp-for="ContactNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="AlternativeContactNumber">Alternative Contact Number</label>
+        <input asp-for="AlternativeContactNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address">Address</label>
+        <textarea rows="5" cols="100" asp-for="Address" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MethodOfContact"> Method of Contact</label>
+        <select asp-for="MethodOfContact" class="form-control">
+            <option selected disabled>-- Method of Contact --</option>
+            <option>Email</option>
+            <option>Phone</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProfileImageUrl">Profile Image</label>
+        <input asp-for="ProfileImageUrl" type="file" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="JoiningDate">Joining Date</label>
+        <input asp-for="JoiningDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Branch.BranchName">Branch Name</label>
+        <input asp-for="Branch.BranchName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Branch.BranchCode">Branch Code</label>
+        <input asp-for="Branch.BranchCode" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Branch.City">City</label>
+        <input asp-for="Branch.City" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Branch.Province"> Province</label>
+        <select asp-for="Branch.Province" class="form-control">
+            <option selected disabled>-- Branch Province --</option>
+            <option>Eastern Cape</option>
+            <option>Free State</option>
+            <option>Gauteng</option>
+            <option>KwaZulu-Natal</option>
+            <option>Limpopo</option>
+            <option>Mpumalanga</option>
+            <option>Northen Cape</option>
+            <option>North West</option>
+            <option>Western Cape</option>
+        </select>
+    </div>
+
+    <button type="submit" id="submitPostBtn" class="btn btn-submitPost">
+        Submit Personal Information
+    </button>
+    <input asp-for="Id" type="hidden" />
+    <input asp-for="Branch.Id" type="hidden" />
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

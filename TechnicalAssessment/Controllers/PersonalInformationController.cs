@@ -35,8 +35,8 @@ namespace TechnicalAssessment.Controllers
                     ProfileImageUrl = personalInformation.ProfileImageUrl,
                     JoiningDate = personalInformation.JoiningDate,
                     Branch = personalInformation.Branch,
-                    User = personalInformation.User,
-                    IsAuthorAdmin = IsAuthorAdmin(personalInformation.User)
+                    AppUser = personalInformation.AppUser,
+                    IsAuthorAdmin = IsAuthorAdmin(personalInformation.AppUser)
                 });
 
             // PersonalInformationListModel.cs wraps the collection of PersonalInformationViewModel
@@ -45,7 +45,7 @@ namespace TechnicalAssessment.Controllers
 
             var model = new PersonalInformationIndexModel
             {
-                PersonalInformationList = peoplesInformation
+                PersonalInformationList = peoplesInformation  // User name PersonalInformationList in View
             };
 
             return View(model);
@@ -76,20 +76,26 @@ namespace TechnicalAssessment.Controllers
             return View(model);
         }
 
+        // GET: PersonalInformation/Create
+        public IActionResult Create()
+        {
+            return View();
+        } 
+
         [HttpPost]
-        public async Task<IActionResult> AddPersonalInformation(NewPesornalInformation model)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,EmailAddress,ContactNumber,AlternativeContactNumber,Address,MethodOfContact,ProfileImageUrl,JoiningDate,Branch.Id,Branch.BranchName,Branch.BranchCode,Branch.City,Branch.Province")] NewPersonalInformation model)
         {
             var userId = _userManager.GetUserId(User);
             var user = _userManager.FindByIdAsync(userId).Result;
             var personalInformation = BuildPersonalInformation(model, user);
 
              //_personalInformationService.Create(personalInformation).Wait(); //Block the current threas until the task is complete
-            await _personalInformationService.Add(personalInformation);
+            await _personalInformationService.Create(personalInformation);
 
             return RedirectToAction("Index", "PersonalInformation", new { id = personalInformation.Id });
         }
 
-        private PersonalInformation BuildPersonalInformation(NewPesornalInformation model, ApplicationUser user)
+        private PersonalInformation BuildPersonalInformation(NewPersonalInformation model, ApplicationUser user)
         {
             var personalInformation = _personalInformationService.GetById(model.Id);
 
@@ -106,13 +112,12 @@ namespace TechnicalAssessment.Controllers
                 JoiningDate = personalInformation.JoiningDate,
                 Branch = new BranchInformation
                         {
-                            Id = personalInformation.Branch.Id,
                             BranchName = personalInformation.Branch.BranchName,
                             BranchCode = personalInformation.Branch.BranchCode,
                             City = personalInformation.Branch.City,
                             Province = personalInformation.Branch.Province
                         },
-                User = user
+                AppUser = user
 
             };
         }
@@ -148,19 +153,58 @@ namespace TechnicalAssessment.Controllers
             return Ok(personalInformation);
         }
 
-
+        // GET: PersonalInformation/Create
+        public IActionResult Post()
+        {
+            return View();
+        }
 
         // POST: /PersonalInformation/Post
-        //[HttpPost]
-        public IActionResult Post([FromBody] PersonalInformation personalInformation)
+        [HttpPost]
+        public IActionResult Post([Bind("Id,FirstName,LastName,EmailAddress,ContactNumber,AlternativeContactNumber,Address,MethodOfContact,ProfileImageUrl,JoiningDate,Branch.Id,Branch.Name,Branch.BranchCode,Branch.City,Branch.Province")] NewPersonalInformation newPersonalInformation)
         {
-            _personalInformationService.Add(personalInformation);
-            return CreatedAtRoute("PersonalInformation/Get", new { id = personalInformation.Id }, personalInformation);
+            if(newPersonalInformation == null)
+            {
+                return BadRequest("New Personal Information is null");
+            }
+
+            var userId = _userManager.GetUserId(User);
+            var user = _userManager.FindByIdAsync(userId).Result;
+
+            PersonalInformation personalInformation = new PersonalInformation
+            {
+                Id = newPersonalInformation.Id,
+                FirstName = newPersonalInformation.FirstName,
+                LastName = newPersonalInformation.LastName,
+                EmailAddress = newPersonalInformation.EmailAddress,
+                ContactNumber = newPersonalInformation.ContactNumber,
+                AlternativeContactNumber = newPersonalInformation.AlternativeContactNumber,
+                Address = newPersonalInformation.Address,
+                MethodOfContact = newPersonalInformation.MethodOfContact,
+                ProfileImageUrl = newPersonalInformation.ProfileImageUrl,
+                JoiningDate = newPersonalInformation.JoiningDate,
+                Branch = new BranchInformation
+                {
+                    Id = newPersonalInformation.Branch.Id,
+                    BranchName = newPersonalInformation.Branch.BranchName,
+                    BranchCode = newPersonalInformation.Branch.BranchCode,
+                    City = newPersonalInformation.Branch.City,
+                    Province = newPersonalInformation.Branch.Province
+                },
+                AppUser = user
+
+            };
+
+            _personalInformationService.Create(personalInformation);
+            return CreatedAtRoute(
+                "Get", 
+                new { id = personalInformation.Id }, 
+                personalInformation);
         }
 
 
         // PUT: /ApplicationInformation/Put/5
-        [HttpPut("{id}")]
+        [HttpPut("/ApplicationInformation/Put/{id}")]
         public IActionResult Put(int id, [FromBody] PersonalInformation personalInformation)
         {
             if (personalInformation == null)
@@ -198,8 +242,7 @@ namespace TechnicalAssessment.Controllers
 
 
         // DELETE: /PersonalInformation/Delete/5
-        //[HttpDelete("{id}")]
-        [HttpGet("/PersonalInformation/Delete/{id}")]
+        [HttpDelete("/PersonalInformation/Delete/{id}")]
         public IActionResult Delete(int id)
         {
             _personalInformationService.Delete(id); 

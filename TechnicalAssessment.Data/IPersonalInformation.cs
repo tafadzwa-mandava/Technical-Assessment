@@ -13,7 +13,7 @@ namespace TechnicalAssessment.Data
         IEnumerable<PersonalInformation> GetLatestPersonalInformation(int count);
         IEnumerable<ApplicationUser> GetAllAdminUsers();
 
-        Task Add(PersonalInformation personalInformation);
+        Task Create(PersonalInformation personalInformation);
         Task Delete(int personalInformationId);
 
         Task UpdatePersonalInformation(int personalInformationId, string FirstName, string newLastName, string newEmailAddress,

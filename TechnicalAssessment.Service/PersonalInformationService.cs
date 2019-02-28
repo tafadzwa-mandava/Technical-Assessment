@@ -16,11 +16,12 @@ namespace TechnicalAssessment.Service
             _context = context;
         }
 
-        public async Task Add(PersonalInformation personalInformation)
+        public async Task Create(PersonalInformation personalInformation)
         {
             _context.Add(personalInformation);
             await _context.SaveChangesAsync();
         }
+
 
         public async Task Delete(int personalInformationId)
         {
@@ -33,7 +34,7 @@ namespace TechnicalAssessment.Service
         {
             return _context.PeoplesInformation
                 .Include(personalInformation => personalInformation.Branch)
-                .Include(personalInformation => personalInformation.User);
+                .Include(personalInformation => personalInformation.AppUser);
         }
 
         public IEnumerable<ApplicationUser> GetAllAdminUsers()
@@ -45,7 +46,7 @@ namespace TechnicalAssessment.Service
         {
             var personalInformation = _context.PeoplesInformation.Where(p => p.Id == personalInformationId)
                 .Include(p => p.Branch)
-                .Include(p => p.User)
+                .Include(p => p.AppUser)
                 .FirstOrDefault();
 
             return personalInformation;
@@ -155,7 +156,7 @@ namespace TechnicalAssessment.Service
         public async Task UpdatePersonalInformationUser(int personalInformationId, ApplicationUser newUser)
         {
             PersonalInformation personalInformation = this.GetById(personalInformationId);
-            personalInformation.User = newUser;
+            personalInformation.AppUser = newUser;
 
             await _context.SaveChangesAsync();
         }

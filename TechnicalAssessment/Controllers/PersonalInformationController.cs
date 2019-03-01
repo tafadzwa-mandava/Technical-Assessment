@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TechnicalAssessment.Data;
 using TechnicalAssessment.Data.Models;
 using TechnicalAssessment.Models.BranchInformationViewModels;
@@ -59,6 +60,69 @@ namespace TechnicalAssessment.Controllers
                 .Result.Contains("Admin");
         }
 
+
+        // GET: PersonalInformation/Create
+        public IActionResult Create()
+        {
+            /**
+             The HttpGet Create method calls the PopulateDepartmentsDropDownList method without setting the selected item,
+             because for a new personal information record the branch is not established yet:
+             **/
+            PopulateBranchesDropDownList();
+            return View();
+        } 
+
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,EmailAddress,ContactNumber,AlternativeContactNumber,Address,MethodOfContact,ProfileImageUrl,JoiningDate,BranchId")] NewPersonalInformation model)
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = _userManager.FindByIdAsync(userId).Result;
+            var personalInformation = BuildPersonalInformation(model, user);
+
+            await _personalInformationService.Create(personalInformation);
+
+            return RedirectToAction("Index", "PersonalInformation", new { id = personalInformation.Id });
+        }
+
+        private PersonalInformation BuildPersonalInformation(NewPersonalInformation model, ApplicationUser user)
+        {
+
+            return new PersonalInformation
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                EmailAddress = model.EmailAddress,
+                ContactNumber = model.ContactNumber,
+                AlternativeContactNumber = model.AlternativeContactNumber,
+                Address = model.Address,
+                MethodOfContact = model.MethodOfContact,
+                ProfileImageUrl = model.ProfileImageUrl,
+                JoiningDate = model.JoiningDate,
+                Branch = _branchInformationService.GetById(model.BranchId),
+                AppUser = user
+
+            };
+        }
+
+
+
+        /**
+         The PopulateBranchDropDownList method gets a list of all branches sorted by name, creates a SelectList
+         collection for a drop-down list, and passes the collection to the view in a ViewBag property. The method accepts
+         the optional selectedBranch parameter that allows the calling code to specify the item that will be selected
+         when the drop-down list is rendered. The view will pass the name BranchID to the DropDownList helper, and the
+         helper then knows to look in the ViewBag object for a SelectList named BranchID. 
+         **/
+
+        private void PopulateBranchesDropDownList(object selectedBranch = null)
+        {
+            var branchesQuery = from d in _branchInformationService.GetAll()
+                                   orderby d.BranchName
+                                   select d;
+            ViewBag.BranchID = new SelectList(branchesQuery, "Id", "BranchName", selectedBranch);
+        }
+
         public IActionResult Branch(int id)
         {
             var personalInformation = _personalInformationService.GetById(id);
@@ -74,179 +138,6 @@ namespace TechnicalAssessment.Controllers
             };
 
             return View(model);
-        }
-
-        // GET: PersonalInformation/Create
-        public IActionResult Create()
-        {
-            return View();
-        } 
-
-        [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,EmailAddress,ContactNumber,AlternativeContactNumber,Address,MethodOfContact,ProfileImageUrl,JoiningDate,Branch.Id,Branch.BranchName,Branch.BranchCode,Branch.City,Branch.Province")] NewPersonalInformation model)
-        {
-            var userId = _userManager.GetUserId(User);
-            var user = _userManager.FindByIdAsync(userId).Result;
-            var personalInformation = BuildPersonalInformation(model, user);
-
-             //_personalInformationService.Create(personalInformation).Wait(); //Block the current threas until the task is complete
-            await _personalInformationService.Create(personalInformation);
-
-            return RedirectToAction("Index", "PersonalInformation", new { id = personalInformation.Id });
-        }
-
-        private PersonalInformation BuildPersonalInformation(NewPersonalInformation model, ApplicationUser user)
-        {
-            var personalInformation = _personalInformationService.GetById(model.Id);
-
-            return new PersonalInformation
-            {
-                FirstName = personalInformation.FirstName,
-                LastName = personalInformation.LastName,
-                EmailAddress = personalInformation.EmailAddress,
-                ContactNumber = personalInformation.ContactNumber,
-                AlternativeContactNumber = personalInformation.AlternativeContactNumber,
-                Address = personalInformation.Address,
-                MethodOfContact = personalInformation.MethodOfContact,
-                ProfileImageUrl = personalInformation.ProfileImageUrl,
-                JoiningDate = personalInformation.JoiningDate,
-                Branch = new BranchInformation
-                        {
-                            BranchName = personalInformation.Branch.BranchName,
-                            BranchCode = personalInformation.Branch.BranchCode,
-                            City = personalInformation.Branch.City,
-                            Province = personalInformation.Branch.Province
-                        },
-                AppUser = user
-
-            };
-        }
-
-
-        private int CalculateYears(DateTime joinDate)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        //TESTING the APIs below in POSTMAN 
-
-        // GET: /PersonalInformation/Get
-        [HttpGet]
-        public IActionResult Get()
-        {
-            IEnumerable<PersonalInformation> peoplesInformation = _personalInformationService.GetAll();
-            return Ok(peoplesInformation);
-        }
-
-        // GET: /PersonalInformation/Get/1
-        [HttpGet("/PersonalInformation/Get/{id}", Name = "Get")]
-        public IActionResult Get(int id)
-        {
-            var personalInformation = _personalInformationService.GetById(id);
-
-            if (personalInformation == null)
-            {
-                return NotFound("The Personal Information record could not be found");
-            }
-
-            return Ok(personalInformation);
-        }
-
-        // GET: PersonalInformation/Create
-        public IActionResult Post()
-        {
-            return View();
-        }
-
-        // POST: /PersonalInformation/Post
-        [HttpPost]
-        public IActionResult Post([Bind("Id,FirstName,LastName,EmailAddress,ContactNumber,AlternativeContactNumber,Address,MethodOfContact,ProfileImageUrl,JoiningDate,Branch.Id,Branch.Name,Branch.BranchCode,Branch.City,Branch.Province")] NewPersonalInformation newPersonalInformation)
-        {
-            if(newPersonalInformation == null)
-            {
-                return BadRequest("New Personal Information is null");
-            }
-
-            var userId = _userManager.GetUserId(User);
-            var user = _userManager.FindByIdAsync(userId).Result;
-
-            PersonalInformation personalInformation = new PersonalInformation
-            {
-                Id = newPersonalInformation.Id,
-                FirstName = newPersonalInformation.FirstName,
-                LastName = newPersonalInformation.LastName,
-                EmailAddress = newPersonalInformation.EmailAddress,
-                ContactNumber = newPersonalInformation.ContactNumber,
-                AlternativeContactNumber = newPersonalInformation.AlternativeContactNumber,
-                Address = newPersonalInformation.Address,
-                MethodOfContact = newPersonalInformation.MethodOfContact,
-                ProfileImageUrl = newPersonalInformation.ProfileImageUrl,
-                JoiningDate = newPersonalInformation.JoiningDate,
-                Branch = new BranchInformation
-                {
-                    Id = newPersonalInformation.Branch.Id,
-                    BranchName = newPersonalInformation.Branch.BranchName,
-                    BranchCode = newPersonalInformation.Branch.BranchCode,
-                    City = newPersonalInformation.Branch.City,
-                    Province = newPersonalInformation.Branch.Province
-                },
-                AppUser = user
-
-            };
-
-            _personalInformationService.Create(personalInformation);
-            return CreatedAtRoute(
-                "Get", 
-                new { id = personalInformation.Id }, 
-                personalInformation);
-        }
-
-
-        // PUT: /ApplicationInformation/Put/5
-        [HttpPut("/ApplicationInformation/Put/{id}")]
-        public IActionResult Put(int id, [FromBody] PersonalInformation personalInformation)
-        {
-            if (personalInformation == null)
-            {
-                return BadRequest("The Personal Information record couldn't be found.");
-            }
-
-            PersonalInformation personalInformationToUpdate = _personalInformationService.GetById(id);
-            if(personalInformationToUpdate == null)
-            {
-                return NotFound("The Personal Information record couldn't be found.");
-            }
-
-            _personalInformationService.UpdatePersonalInformation(id,
-                personalInformationToUpdate.FirstName,
-                personalInformationToUpdate.LastName,
-                personalInformationToUpdate.EmailAddress,
-                personalInformationToUpdate.ContactNumber,
-                personalInformationToUpdate.AlternativeContactNumber,
-                personalInformationToUpdate.Address,
-                personalInformationToUpdate.MethodOfContact,
-                personalInformationToUpdate.ProfileImageUrl,
-                personalInformationToUpdate.JoiningDate,
-                new BranchInformation {
-                    Id = personalInformationToUpdate.Branch.Id,
-                    BranchName = personalInformationToUpdate.Branch.BranchName,
-                    BranchCode = personalInformationToUpdate.Branch.BranchCode,
-                    City = personalInformationToUpdate.Branch.City,
-                    Province = personalInformationToUpdate.Branch.Province
-                }
-             );
-
-            return NoContent();
-        }
-
-
-        // DELETE: /PersonalInformation/Delete/5
-        [HttpDelete("/PersonalInformation/Delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            _personalInformationService.Delete(id); 
-            return NoContent();
         }
 
     }

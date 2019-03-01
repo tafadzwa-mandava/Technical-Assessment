@@ -19,7 +19,7 @@ namespace TechnicalAssessment.Models.PersonalInformationViewModels
         public string ProfileImageUrl { get; set; }
         public DateTime JoiningDate { get; set; }
 
-        public BranchInformation Branch { get; set; }
+        public int BranchId { get; set; }
 
     }
 }

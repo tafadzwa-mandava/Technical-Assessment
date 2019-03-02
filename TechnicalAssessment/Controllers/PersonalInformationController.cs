@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using TechnicalAssessment.Data;
 using TechnicalAssessment.Data.Models;
 using TechnicalAssessment.Models.BranchInformationViewModels;
@@ -121,6 +122,71 @@ namespace TechnicalAssessment.Controllers
                                    orderby d.BranchName
                                    select d;
             ViewBag.BranchID = new SelectList(branchesQuery, "Id", "BranchName", selectedBranch);
+        }
+
+
+        // GET: PersonalInformation/Edit/5
+        public IActionResult Edit(int id)
+        {
+
+            var personalInformation = _personalInformationService.GetById(id);
+            if (personalInformation == null)
+            {
+                return NotFound();
+            }
+
+            PopulateBranchesDropDownList(personalInformation.Branch.Id);
+            return View(personalInformation);
+        }
+
+        // POST: BranchInformation/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,EmailAddress,ContactNumber,AlternativeContactNumber,Address,MethodOfContact,ProfileImageUrl,JoiningDate,Branch.Id")] PersonalInformation personalInformation)
+        {
+            if (id != personalInformation.Id)
+            {
+                return NotFound();
+            }
+
+            var branchToUpdate = _branchInformationService.GetBranchByPersonalInformation(personalInformation.Branch.Id);
+
+            var userId = _userManager.GetUserId(User);
+            var user = _userManager.FindByIdAsync(userId).Result;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _personalInformationService.UpdatePersonalInformation(personalInformation.Id, personalInformation.FirstName, personalInformation.LastName, personalInformation.EmailAddress,
+                        personalInformation.ContactNumber, personalInformation.AlternativeContactNumber, personalInformation.Address, personalInformation.MethodOfContact, personalInformation.ProfileImageUrl,
+                        personalInformation.JoiningDate, branchToUpdate, user);
+      
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PersonalInformationExists(personalInformation.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            PopulateBranchesDropDownList(branchToUpdate.Id);
+            return View(personalInformation);
+        }
+
+
+        private bool PersonalInformationExists(int id)
+        {
+            return _personalInformationService.GetAll().Any(e => e.Id == id);
         }
 
         public IActionResult Branch(int id)

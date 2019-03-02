@@ -19,7 +19,7 @@ namespace TechnicalAssessment.Data
         Task UpdatePersonalInformation(int personalInformationId, string FirstName, string newLastName, string newEmailAddress,
                        string newContactNumber, string AlternativeContactNumber, string Address,
                        string newMethodOfContact, string newProfileImageUrl, DateTime newJoiningDate,
-                       BranchInformation newBranchInformation);
+                       BranchInformation newBranchInformation, ApplicationUser newAppUser);
         Task UpdatePersonalInformationFirstName (int personalInformationId, string newFirstName);
         Task UpdatePersonalInformationLastName(int personalInformationId, string newLastName);
         Task UpdatePersonalInformationEmailAddress(int personalInformationId, string newEmailAddress);
@@ -29,7 +29,7 @@ namespace TechnicalAssessment.Data
         Task UpdatePersonalInformationProfileImageUrl(int personalInformationId, string newProfileImageUrl);
         Task UpdatePersonalInformationJoiningDate(int personalInformationId, DateTime newJoiningDate);
         Task UpdatePersonalInformationBranchInformation(int personalInformationId, BranchInformation newBranchInformation);
-        Task UpdatePersonalInformationUser(int personalInformationId, ApplicationUser newUser);
+        Task UpdatePersonalInformationUser(int personalInformationId, ApplicationUser newAppUser);
 
     }
 }

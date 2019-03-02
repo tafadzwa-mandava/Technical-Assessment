@@ -98,7 +98,7 @@ namespace TechnicalAssessment.Controllers
                 AlternativeContactNumber = model.AlternativeContactNumber,
                 Address = model.Address,
                 MethodOfContact = model.MethodOfContact,
-                ProfileImageUrl = model.ProfileImageUrl,
+                ProfileImageUrl = "/images/personalinformation/" + model.ProfileImageUrl,
                 JoiningDate = model.JoiningDate,
                 Branch = _branchInformationService.GetById(model.BranchId),
                 AppUser = user
@@ -130,13 +130,29 @@ namespace TechnicalAssessment.Controllers
         {
 
             var personalInformation = _personalInformationService.GetById(id);
-            if (personalInformation == null)
+
+            var newPersonalInformation = new NewPersonalInformation
+            {
+                Id = personalInformation.Id,
+                FirstName = personalInformation.FirstName,
+                LastName = personalInformation.LastName,
+                EmailAddress = personalInformation.EmailAddress,
+                ContactNumber = personalInformation.ContactNumber,
+                AlternativeContactNumber = personalInformation.AlternativeContactNumber,
+                Address = personalInformation.Address,
+                MethodOfContact = personalInformation.MethodOfContact,
+                ProfileImageUrl = personalInformation.ProfileImageUrl,
+                JoiningDate = personalInformation.JoiningDate,
+                BranchId = personalInformation.Branch.Id
+            };
+
+            if (newPersonalInformation == null)
             {
                 return NotFound();
             }
 
-            PopulateBranchesDropDownList(personalInformation.Branch.Id);
-            return View(personalInformation);
+            PopulateBranchesDropDownList(newPersonalInformation.BranchId);
+            return View(newPersonalInformation);
         }
 
         // POST: BranchInformation/Edit/5
@@ -144,14 +160,14 @@ namespace TechnicalAssessment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,EmailAddress,ContactNumber,AlternativeContactNumber,Address,MethodOfContact,ProfileImageUrl,JoiningDate,Branch.Id")] PersonalInformation personalInformation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,EmailAddress,ContactNumber,AlternativeContactNumber,Address,MethodOfContact,ProfileImageUrl,JoiningDate,BranchId")] NewPersonalInformation newPersonalInformation)
         {
-            if (id != personalInformation.Id)
+            if (id != newPersonalInformation.Id)
             {
                 return NotFound();
             }
 
-            var branchToUpdate = _branchInformationService.GetBranchByPersonalInformation(personalInformation.Branch.Id);
+            var branchToUpdate = _branchInformationService.GetById(newPersonalInformation.BranchId);
 
             var userId = _userManager.GetUserId(User);
             var user = _userManager.FindByIdAsync(userId).Result;
@@ -160,14 +176,14 @@ namespace TechnicalAssessment.Controllers
             {
                 try
                 {
-                    await _personalInformationService.UpdatePersonalInformation(personalInformation.Id, personalInformation.FirstName, personalInformation.LastName, personalInformation.EmailAddress,
-                        personalInformation.ContactNumber, personalInformation.AlternativeContactNumber, personalInformation.Address, personalInformation.MethodOfContact, personalInformation.ProfileImageUrl,
-                        personalInformation.JoiningDate, branchToUpdate, user);
+                    await _personalInformationService.UpdatePersonalInformation(newPersonalInformation.Id, newPersonalInformation.FirstName, newPersonalInformation.LastName, newPersonalInformation.EmailAddress,
+                        newPersonalInformation.ContactNumber, newPersonalInformation.AlternativeContactNumber, newPersonalInformation.Address, newPersonalInformation.MethodOfContact, newPersonalInformation.ProfileImageUrl,
+                        newPersonalInformation.JoiningDate, branchToUpdate, user);
       
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PersonalInformationExists(personalInformation.Id))
+                    if (!PersonalInformationExists(newPersonalInformation.Id))
                     {
                         return NotFound();
                     }
@@ -180,7 +196,7 @@ namespace TechnicalAssessment.Controllers
             }
 
             PopulateBranchesDropDownList(branchToUpdate.Id);
-            return View(personalInformation);
+            return View(newPersonalInformation);
         }
 
 

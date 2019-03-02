@@ -21,5 +21,5 @@ namespace TechnicalAssessment.Models.PersonalInformationViewModels
 
         public int BranchId { get; set; }
 
-    }
+    } 
 }

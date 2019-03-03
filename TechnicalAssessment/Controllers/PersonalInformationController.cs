@@ -26,8 +26,20 @@ namespace TechnicalAssessment.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder, string currentFilter, string searchString)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "firstname_desc" : "";
+            ViewBag.LastNameSortParm = String.IsNullOrEmpty(sortOrder) ? "lastname_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if(searchString == null)
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             //IEnumerable<PersonalInformationViewModel> peoplesInformation = _personalInformationService.GetAll() Further simplified using var
             var peoplesInformation = _personalInformationService.GetAll()
                 .Select(personalInformation => new PersonalInformationViewModel {
@@ -40,6 +52,33 @@ namespace TechnicalAssessment.Controllers
                     AppUser = personalInformation.AppUser,
                     IsAuthorAdmin = IsAuthorAdmin(personalInformation.AppUser)
                 });
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                peoplesInformation = peoplesInformation.Where(s => s.FirstName.Contains(searchString) 
+                                                          || s.LastName.Contains(searchString)
+                                                          || s.Branch.BranchName.Contains(searchString)
+                                                          || s.Branch.Province.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "firstname_desc":
+                    peoplesInformation = peoplesInformation.OrderByDescending(s => s.FirstName);
+                    break;
+                case "lastname_desc":
+                    peoplesInformation = peoplesInformation.OrderByDescending(s => s.LastName);
+                    break;
+                case "date_desc":
+                    peoplesInformation = peoplesInformation.OrderByDescending(s => s.JoiningDate);
+                    break;
+                case "Date":
+                    peoplesInformation = peoplesInformation.OrderBy(s => s.JoiningDate);
+                    break;
+                default: //Name ascending
+                    peoplesInformation = peoplesInformation.OrderBy(s => s.LastName);
+                    break;
+            }
 
             // PersonalInformationListModel.cs wraps the collection of PersonalInformationViewModel
             // This is a light weight rapper for the PersonalInformationViewModel
@@ -270,6 +309,29 @@ namespace TechnicalAssessment.Controllers
             }
 
             return View(newPersonalInformation);
+        }
+
+
+        // GET: /PersonalInformation/Get
+        [HttpGet]
+        public IActionResult Get()
+        {
+            IEnumerable<PersonalInformation> peoplesInformation = _personalInformationService.GetAll();
+            return Ok(peoplesInformation);
+        }
+
+        // GET: /PersonalInformation/Get/1
+        [HttpGet("/PersonalInformation/Get/{id}", Name = "Get")]
+        public IActionResult Get(int id)
+        {
+            var personalInformation = _personalInformationService.GetById(id);
+
+            if (personalInformation == null)
+            {
+                return NotFound("The Personal Information record could not be found");
+            }
+
+            return Ok(personalInformation);
         }
 
         public IActionResult Branch(int id)

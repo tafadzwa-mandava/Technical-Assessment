@@ -16,37 +16,64 @@
     <div class="row frontPageContent">
 
         <table class="table table-hover" id="latestPeoplesInformationTable">
+            <thead>
+                <tr>
+                    <td>
+                        <h4>Profile Image</h4>
+                    </td>
+
+                    <td>
+                        <h4>First Name</h4>
+                    </td>
+
+                    <td>
+                        <h4>Last Name</h4>
+                    </td>
+
+                    <td>
+                        <h4>Joining Date</h4>
+                    </td>
+
+                    <td>
+                        <h4>Branch Name</h4>
+                    </td>
+
+                    <td>
+                        <h4>Province</h4>
+                    </td>
+                </tr>
+            </thead>
 
 
             <tbody>
                 @foreach (var personalInformation in Model.LatestPeoplesInformation)
                 {
-                <tr>
-                    <td>
-                        <div class="profileImageLogo" style="background-image:url(@personalInformation.ProfileImageUrl); "></div>
-                    </td>
+                    <tr>
+                        <td>
+                            <div class="profileImageLogo" style="background-image:url(@personalInformation.ProfileImageUrl); "></div>
+                        </td>
 
-                    <td>
-                        @personalInformation.FirstName
-                    </td>
+                        <td>
+                            @personalInformation.FirstName
+                        </td>
 
-                    <td>
-                        @personalInformation.LastName
-                    </td>
+                        <td>
+                            @personalInformation.LastName
+                        </td>
 
-                    <td>
-                        @personalInformation.JoiningDate
-                    </td>
+                        <td>
+                            @personalInformation.JoiningDate
+                        </td>
 
-                    <td>
-                         @personalInformation.Branch.BranchName
-                    </td>
+                        <td>
+                            @personalInformation.Branch.BranchName
+                        </td>
 
-                    <td>
-                        @personalInformation.Branch.Province
-                    </td>
+                        <td>
+                            @personalInformation.Branch.Province
+                        </td>
 
-                </tr>
+                    </tr>
                 }
             </tbody>
 

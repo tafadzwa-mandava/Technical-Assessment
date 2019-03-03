@@ -3,51 +3,96 @@
 <h1>People's Information</h1>
 
 <span id="headingBtn">
-    <a asp-controller="PersonalInformation" 
-           asp-action="Create" 
-           asp-route-id="" class="btn btn-newPost">
-           Create Client's Personal Information
+    <a asp-controller="PersonalInformation"
+       asp-action="Create"
+       asp-route-id="" class="btn btn-newPost">
+        Create Client's Personal Information
     </a>
 </span>
 
+@using (Html.BeginForm("Index", "PersonalInformation", FormMethod.Get))
+{
+    <p>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+
 <table class="table table-hover" id="personalInformationIndexTable">
+    <thead>
+
+        <tr>
+            <td>
+                <h4>Profile Image</h4>
+            </td>
+
+            <td>
+                <h4>
+                    @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParm, currentFilter = ViewBag.CurrentFilter })
+                </h4>
+            </td>
+
+            <td>
+                <h4>
+                    @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParm, currentFilter = ViewBag.CurrentFilter })
+                </h4>
+            </td>
+
+            <td>
+                <h4>
+                    @Html.ActionLink("Joining Date", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
+                </h4>
+            </td>
+
+            <td>
+                <h4>Branch Name</h4>
+            </td>
+
+            <td>
+                <h4>Province</h4>
+            </td>
+        </tr>
+
+    </thead>
+
     <tbody>
         @foreach (var personalInformation in Model.PersonalInformationList)
         {
-        <tr>
-            <td>
-                <div class="profileImageLogo" style="background-image:url(@personalInformation.ProfileImageUrl); "></div>
-            </td>
+            <tr>
+                <td>
+                    <div class="profileImageLogo" style="background-image:url(@personalInformation.ProfileImageUrl); "></div>
+                </td>
 
-            <td>
-                @personalInformation.FirstName
-            </td>
+                <td>
+                    @personalInformation.FirstName
+                </td>
 
-            <td>
-                @personalInformation.LastName
-            </td>
+                <td>
+                    @personalInformation.LastName
+                </td>
 
-            <td>
-                @personalInformation.JoiningDate
-            </td>
+                <td>
+                    @personalInformation.JoiningDate
+                </td>
 
-            <td>
-                <a asp-controller="PersonalInformation" asp-action="Branch" asp-route-id="@personalInformation.Id">
-                    @personalInformation.Branch.BranchName
-                </a>
-            </td>
+                <td>
+                    <a asp-controller="PersonalInformation" asp-action="Branch" asp-route-id="@personalInformation.Id">
+                        @personalInformation.Branch.BranchName
+                    </a>
+                </td>
 
-            <td>
-                @personalInformation.Branch.Province
-            </td>
+                <td>
+                    @personalInformation.Branch.Province
+                </td>
 
-            <td>
-                <a asp-action="Edit" asp-route-id="@personalInformation.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@personalInformation.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@personalInformation.Id">Delete</a>
-            </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@personalInformation.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@personalInformation.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@personalInformation.Id">Delete</a>
+                </td>
 
-        </tr>
+            </tr>
         }
     </tbody>
 </table>

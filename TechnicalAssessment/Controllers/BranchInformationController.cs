@@ -66,7 +66,7 @@ namespace TechnicalAssessment.Controllers
             return Ok(branchInformation);
         }
 
-        // GET: ScaffoldedInformation/Details/5
+        // GET: BranchInformation/Details/5
         public IActionResult Details(int id)
         {
 
@@ -79,7 +79,7 @@ namespace TechnicalAssessment.Controllers
             return View(branchInformation);
         }
 
-        // GET: PersonalInformation/Create
+        // GET: BranchInformation/Create
         public IActionResult Create()
         {
             return View();

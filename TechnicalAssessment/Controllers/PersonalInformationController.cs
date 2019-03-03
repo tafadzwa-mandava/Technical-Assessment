@@ -130,7 +130,6 @@ namespace TechnicalAssessment.Controllers
         {
 
             var personalInformation = _personalInformationService.GetById(id);
-
             var newPersonalInformation = new NewPersonalInformation
             {
                 Id = personalInformation.Id,
@@ -203,6 +202,74 @@ namespace TechnicalAssessment.Controllers
         private bool PersonalInformationExists(int id)
         {
             return _personalInformationService.GetAll().Any(e => e.Id == id);
+        }
+
+
+        // GET: PersonalInformation/Delete/5
+        public IActionResult Delete(int id)
+        {
+
+            var personalInformation = _personalInformationService.GetById(id);
+            var newPersonalInformation = new NewPersonalInformation
+            {
+                Id = personalInformation.Id,
+                FirstName = personalInformation.FirstName,
+                LastName = personalInformation.LastName,
+                EmailAddress = personalInformation.EmailAddress,
+                ContactNumber = personalInformation.ContactNumber,
+                AlternativeContactNumber = personalInformation.AlternativeContactNumber,
+                Address = personalInformation.Address,
+                MethodOfContact = personalInformation.MethodOfContact,
+                ProfileImageUrl = personalInformation.ProfileImageUrl,
+                JoiningDate = personalInformation.JoiningDate,
+                BranchId = personalInformation.Branch.Id
+            };
+
+            if (newPersonalInformation == null)
+            {
+                return NotFound();
+            }
+
+            return View(newPersonalInformation);
+        }
+
+        // POST: PersonalInformation/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+
+            await _personalInformationService.Delete(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: PersonalInformation/Details/5
+        public IActionResult Details(int id)
+        {
+
+            var personalInformation = _personalInformationService.GetById(id);
+            var newPersonalInformation = new NewPersonalInformation
+            {
+                Id = personalInformation.Id,
+                FirstName = personalInformation.FirstName,
+                LastName = personalInformation.LastName,
+                EmailAddress = personalInformation.EmailAddress,
+                ContactNumber = personalInformation.ContactNumber,
+                AlternativeContactNumber = personalInformation.AlternativeContactNumber,
+                Address = personalInformation.Address,
+                MethodOfContact = personalInformation.MethodOfContact,
+                ProfileImageUrl = personalInformation.ProfileImageUrl,
+                JoiningDate = personalInformation.JoiningDate,
+                BranchId = personalInformation.Branch.Id
+            };
+
+            if (newPersonalInformation == null)
+            {
+                return NotFound();
+            }
+
+            return View(newPersonalInformation);
         }
 
         public IActionResult Branch(int id)
